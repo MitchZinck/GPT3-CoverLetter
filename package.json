@@ -1,0 +1,33 @@
+{
+  "dependencies": {
+    "@chakra-ui/react": "^2.4.9",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "autosize": "^5.0.2",
+    "formidable": "^2.1.1",
+    "framer-motion": "^8.5.4",
+    "fs": "^0.0.1-security",
+    "next": "^13.1.5",
+    "openai": "^3.1.0",
+    "pdf-parse": "^1.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-drag-drop-files": "^2.3.8",
+    "react-textarea-autosize": "^8.4.0"
+  },
+  "name": "interview-ai",
+  "version": "1.0.0",
+  "description": "Interview assistant using OpenAI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "author": "Mitchell Zinck",
+  "license": "ISC",
+  "devDependencies": {
+    "dotenv-webpack": "^8.0.1"
+  }
+}
