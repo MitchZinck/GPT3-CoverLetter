@@ -69,7 +69,7 @@ function Submit() {
             <Box borderWidth='1px' borderRadius='lg' borderColor="orange" overflow='hidden' boxShadow='xl' p='6' rounded='md' bg='white'>
               <Tabs isFitted index={tabIndex} onChange={handleTabsChange}>
                 <TabList>
-                  <Tab _selected={{ color: 'white', bg: 'orange.500' }}>Job Desc.</Tab>
+                  <Tab _selected={{ color: 'white', bg: 'orange.500' }}>Job Description</Tab>
                   <Tab _selected={{ color: 'white', bg: 'orange.500' }}>Cover Letter</Tab>
                 </TabList>
                 <TabPanels>
