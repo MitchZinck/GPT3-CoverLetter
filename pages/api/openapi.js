@@ -5,8 +5,26 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
+function buildReqPrompt(resume, jobDesc) {
+    let prompt = null;
+    try {
+        if(resume.resumeText && jobDesc) {
+            prompt = "Using less than 300 words, create a professional cover letter for me that is based on this job: '" + 
+                    jobDesc + 
+                    "' and also based on my resume: '" + 
+                    resume.resumeText + "'";
+        } else if(jobDesc) {
+            prompt = "Using less than 300 words, create a professional cover letter for me based on this job: '" + 
+                    jobDesc + "'"; 
+        }
+    } catch(error) {
+        console.log("Unable to build prompt...\n" + error);
+    }
+    return prompt;
+};
+
 const post = async (req, res) => {
-    const prompt = req.body.prompt;
+    const prompt = buildReqPrompt(req.body.resume, req.body.jobDesc);
     if(prompt) {
         const response = await openai.createCompletion({
             model: "text-davinci-003",

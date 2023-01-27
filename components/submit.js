@@ -3,23 +3,9 @@ import { useState } from 'react';
 import { Progress, Box, FormControl, Button, Tabs, TabList, Tab, TabPanels, TabPanel, Heading} from '@chakra-ui/react';
 import { AutoResizeTextarea } from './AutoResizeTextArea';
 
-function buildReqPrompt(resume, jobDesc) {
-    let prompt = null;
-    if(resume.resumeText && jobDesc) {
-        prompt = "Using less than 300 words, create a professional cover letter for me that is based on this job: '" + 
-                jobDesc + 
-                "' and also based on my resume: '" + 
-                resume.resumeText + "'";
-    } else if(jobDesc) {
-        prompt = "Using less than 300 words, create a professional cover letter for me based on this job: '" + 
-                jobDesc + "'"; 
-    }
-    return prompt;
-};
-
 function Submit() {
     const [tabIndex, setTabIndex] = useState(0);
-    const [coverLetter, setCoverLetter] = useState('test');
+    const [coverLetter, setCoverLetter] = useState();
     const [generating, setGenerating] = useState(false);
 
     // Handles the submit event on form submit.
@@ -33,15 +19,9 @@ function Submit() {
     
       const resume = JSON.parse(localStorage.getItem("resume"));
       const jobDesc = event.target.jobDesc.value;
-      const prompt = buildReqPrompt(resume, jobDesc);
-
-      if(prompt == null) {
-        console.log("Generated prompt is null, bad submit.");
-      }
   
       // Create data object to send to openapi
       const data = {
-        prompt: prompt,
         resume: resume,
         jobDesc: jobDesc
       }
