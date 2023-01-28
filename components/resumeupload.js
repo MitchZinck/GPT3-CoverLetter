@@ -31,7 +31,7 @@ function Resumeupload() {
     }).then(res => res.json()).then(data => {
       if (data) {
         const resume = {
-          resumeText: data.openapi.text,
+          resumeText: data.resume,
           name: file.name
         };
         localStorage.setItem("resume", JSON.stringify(resume));

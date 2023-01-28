@@ -1,6 +1,6 @@
 import formidable from "formidable";
 import fs from "fs";
-import pdfParse from "pdf-parse";
+import textract from "textract";
 
 export const config = {
   api: {
@@ -11,24 +11,34 @@ export const config = {
 const post = async (req, res) => {
   const form = new formidable.IncomingForm();
   form.parse(req, async function (err, fields, files) {
-    const result = await readFile(files.file);
-    const response = {
-      openapi: result
-    }
-    return res.json(response);
+    let result = await readFile(files.file, files.file.originalFilename).then(text => {
+      return text;
+    }).catch(err => {
+      console.log(err)
+    })
+    if(result) {
+      const response = {
+        resume: result
+      }
+      return res.json(response);
+    } else {
+      return res.status(400).end();
+    }  
   });
 };
 
-const readFile = async (file) => {
+const readFile = async (file, fileName) => {
   const data = fs.readFileSync(file.filepath);
-  let pdfExtract;
-  try {
-    pdfExtract = await pdfParse(data)
-  } catch (error) {
-    console.log("Unable to parse file:" + error);
-  }
-  await fs.unlinkSync(file.filepath);
-  return pdfExtract;
+  return new Promise((resolve, reject) => {
+    textract.fromBufferWithName(fileName, data, function( error, text ) {
+      fs.unlinkSync(file.filepath);
+      if(error) {
+        reject(new Error("Unable to parse resume"));
+      } else {
+        resolve(text);
+      }
+    })
+  })
 };
 
 export default (req, res) => {
