@@ -2,6 +2,7 @@ import { ifError } from "assert";
 import formidable from "formidable";
 import fs from "fs";
 import textract from "textract";
+import pdfparse from "pdf-parse";
 
 export const config = {
   api: {
@@ -29,17 +30,27 @@ const post = async (req, res) => {
 };
 
 const readFile = async (file, fileName) => {
-  const data = fs.readFileSync(file.filepath);
-  return new Promise((resolve, reject) => {
-    textract.fromBufferWithName(fileName, data, function( error, text ) {
-      fs.unlinkSync(file.filepath);
-      if(error) {
+  const buffer = fs.readFileSync(file.filepath);
+  if(fileName && fileName.endsWith(".pdf")) {
+    return new Promise((resolve, reject) => {
+      pdfparse(buffer).then(function(data) {
+        resolve(data.text);
+      }).catch(function(error){
         reject(new Error("Unable to parse resume" + error.message));
-      } else {
-        resolve(text);
-      }
+      });
     })
-  })
+  } else {
+    return new Promise((resolve, reject) => {
+      textract.fromBufferWithName(fileName, buffer, function( error, text ) {
+        fs.unlinkSync(file.filepath);
+        if(error) {
+          reject(new Error("Unable to parse resume" + error.message));
+        } else {
+          resolve(text);
+        }
+      })
+    })
+  }
 };
 
 export default (req, res) => {
