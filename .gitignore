@@ -11,8 +11,6 @@
 
 .env
 
-package-lock.json
-
 # CMake
 cmake-build-*/
 # File-based project format

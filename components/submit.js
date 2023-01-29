@@ -77,7 +77,7 @@ function Submit() {
                     <AutoResizeTextarea variant="flushed" size="sm" id="jobDesc" name="jobDesc" placeholder="Paste the job description here..." />
                   </TabPanel>
                   <TabPanel>
-                    <Progress style={{display: generating ? 'block' : 'none'}} size='xs' colorScheme="orange" isIndeterminate />,
+                    <Progress style={{display: generating ? 'block' : 'none'}} size='xs' colorScheme="orange" isIndeterminate />
                     <AutoResizeTextarea style={{display: !generating ? 'block' : 'none'}} variant="flushed" size="sm" isReadOnly value={coverLetter} />
                   </TabPanel>
                 </TabPanels>
