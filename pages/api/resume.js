@@ -33,6 +33,7 @@ const readFile = async (file, fileName) => {
     textract.fromBufferWithName(fileName, data, function( error, text ) {
       fs.unlinkSync(file.filepath);
       if(error) {
+        console.log("Error parsing resume: " + error);
         reject(new Error("Unable to parse resume"));
       } else {
         resolve(text);
