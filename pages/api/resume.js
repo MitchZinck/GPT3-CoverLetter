@@ -16,6 +16,7 @@ const post = async (req, res) => {
       return text;
     }).catch(err => {
       new Error(err);
+      return err;
     })
     if(result) {
       const response = {
