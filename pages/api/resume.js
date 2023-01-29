@@ -9,8 +9,10 @@ export const config = {
 };
 
 const post = async (req, res) => {
+  console.log("Received resume post: " + req);
   const form = new formidable.IncomingForm();
   form.parse(req, async function (err, fields, files) {
+    console.log("Reading file: " + fileName);
     let result = await readFile(files.file, files.file.originalFilename).then(text => {
       return text;
     }).catch(err => {
@@ -28,7 +30,6 @@ const post = async (req, res) => {
 };
 
 const readFile = async (file, fileName) => {
-  console.log("Reading file: " + fileName);
   const data = fs.readFileSync(file.filepath);
   return new Promise((resolve, reject) => {
     console.log("Initiating parse of resume: " + fileName);

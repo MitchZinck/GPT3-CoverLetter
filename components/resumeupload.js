@@ -39,7 +39,7 @@ function Resumeupload() {
       } else {
         setUploadLabel("Unable to successfully parse your resume... please try again with a different resume.");
       }
-    }).catch(error => console.error('U1nable to successfully post to resume api:', error));
+    }).catch(error => console.error('Unable to successfully post to resume api:', error));
     
   };
 
