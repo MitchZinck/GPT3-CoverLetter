@@ -9,7 +9,7 @@ export const config = {
 };
 
 const post = async (req, res) => {
-  console.log("Received resume post: " + req);
+  console.log("Received resume post.");
   const form = new formidable.IncomingForm();
   form.parse(req, async function (err, fields, files) {
     console.log("Reading file: " + fileName);
