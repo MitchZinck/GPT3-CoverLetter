@@ -30,7 +30,9 @@ const post = async (req, res) => {
 const readFile = async (file, fileName) => {
   const data = fs.readFileSync(file.filepath);
   return new Promise((resolve, reject) => {
+    console.log("Initiating parse of resume: " + fileName);
     textract.fromBufferWithName(fileName, data, function( error, text ) {
+      console.log("Resume callback hit with text: " + text);
       fs.unlinkSync(file.filepath);
       if(error) {
         console.log("Error parsing resume: " + error);
