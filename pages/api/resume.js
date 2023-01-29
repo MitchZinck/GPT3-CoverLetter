@@ -12,7 +12,7 @@ const post = async (req, res) => {
   console.log("Received resume post.");
   const form = new formidable.IncomingForm();
   form.parse(req, async function (err, fields, files) {
-    console.log("Reading file: " + fileName);
+    console.log("Reading file: " + files.file.originalFilename);
     let result = await readFile(files.file, files.file.originalFilename).then(text => {
       return text;
     }).catch(err => {
