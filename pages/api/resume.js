@@ -22,12 +22,13 @@ const post = async (req, res) => {
       }
       return res.json(response);
     } else {
-      return res.status(400).end();
+      return res.status(400).json();
     }  
   });
 };
 
 const readFile = async (file, fileName) => {
+  console.log("Reading file: " + fileName);
   const data = fs.readFileSync(file.filepath);
   return new Promise((resolve, reject) => {
     console.log("Initiating parse of resume: " + fileName);
