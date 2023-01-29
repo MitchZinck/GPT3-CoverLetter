@@ -1,3 +1,4 @@
+import { ifError } from "assert";
 import formidable from "formidable";
 import fs from "fs";
 import textract from "textract";
@@ -9,14 +10,12 @@ export const config = {
 };
 
 const post = async (req, res) => {
-  console.log("Received resume post.");
   const form = new formidable.IncomingForm();
   form.parse(req, async function (err, fields, files) {
-    console.log("Reading file: " + files.file.originalFilename);
     let result = await readFile(files.file, files.file.originalFilename).then(text => {
       return text;
     }).catch(err => {
-      console.log(err)
+      new Error(err);
     })
     if(result) {
       const response = {
@@ -32,13 +31,10 @@ const post = async (req, res) => {
 const readFile = async (file, fileName) => {
   const data = fs.readFileSync(file.filepath);
   return new Promise((resolve, reject) => {
-    console.log("Initiating parse of resume: " + fileName);
     textract.fromBufferWithName(fileName, data, function( error, text ) {
-      console.log("Resume callback hit with text: " + text);
       fs.unlinkSync(file.filepath);
       if(error) {
-        console.log("Error parsing resume: " + error);
-        reject(new Error("Unable to parse resume"));
+        reject(new Error("Unable to parse resume" + error));
       } else {
         resolve(text);
       }
