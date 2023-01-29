@@ -15,8 +15,7 @@ const post = async (req, res) => {
     let result = await readFile(files.file, files.file.originalFilename).then(text => {
       return text;
     }).catch(err => {
-      new Error(err);
-      return err;
+      return err.message;
     })
     if(result) {
       const response = {
@@ -35,7 +34,7 @@ const readFile = async (file, fileName) => {
     textract.fromBufferWithName(fileName, data, function( error, text ) {
       fs.unlinkSync(file.filepath);
       if(error) {
-        reject(new Error("Unable to parse resume" + error));
+        reject(new Error("Unable to parse resume" + error.message));
       } else {
         resolve(text);
       }
