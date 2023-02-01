@@ -1,7 +1,7 @@
 const { Configuration, OpenAIApi } = require("openai");
 
 const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+    apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
 
@@ -10,12 +10,12 @@ function buildReqPrompt(resume, jobDesc) {
     try {
         if(resume.resumeText && jobDesc) {
             prompt = "Using less than 300 words, create a professional cover letter for me that is based on this job: '" + 
-                    jobDesc + 
-                    "' and also based on my resume: '" + 
-                    resume.resumeText + "'";
+            jobDesc + 
+            "' and also based on my resume: '" + 
+            resume.resumeText + "' - Do not state any skills or experience in the cover letter that is not listed in my resume.";
         } else if(jobDesc) {
             prompt = "Using less than 300 words, create a professional cover letter for me based on this job: '" + 
-                    jobDesc + "'"; 
+            jobDesc + "'"; 
         }
     } catch(error) {
         console.log("Unable to build prompt...\n" + error);
@@ -55,12 +55,12 @@ const errorResponse = {
 
 export default (req, res) => {
     req.method === "POST"
-      ? post(req, res)
-      : req.method === "PUT"
-      ? console.log("PUT")
-      : req.method === "DELETE"
-      ? console.log("DELETE")
-      : req.method === "GET"
-      ? console.log("GET")
-      : res.status(404).send("");
-  };
+    ? post(req, res)
+    : req.method === "PUT"
+    ? console.log("PUT")
+    : req.method === "DELETE"
+    ? console.log("DELETE")
+    : req.method === "GET"
+    ? console.log("GET")
+    : res.status(404).send("");
+};
