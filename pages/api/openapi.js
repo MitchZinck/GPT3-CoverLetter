@@ -12,7 +12,8 @@ function buildReqPrompt(resume, jobDesc) {
             prompt = "Using less than 300 words, create a professional cover letter for me that is based on this job: '" + 
             jobDesc + 
             "' and also based on my resume: '" + 
-            resume.resumeText + "' - Do not state any skills or experience in the cover letter that is not listed in my resume.";
+            resume.resumeText + 
+            "' - If you decide to list skills or experience, only use those that are also listed in the provided resume.";
         } else if(jobDesc) {
             prompt = "Using less than 300 words, create a professional cover letter for me based on this job: '" + 
             jobDesc + "'"; 
