@@ -5,6 +5,14 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
+/**
+ * Build a request prompt based on the resume and job description.
+ *
+ * @param {Object} resume - An object containing the resume text.
+ * @param {String} jobDesc - A string representing the job description.
+ *
+ * @returns {String} - The generated prompt for the request.
+ */
 function buildReqPrompt(resume, jobDesc) {
     let prompt = null;
     try {
@@ -24,6 +32,14 @@ function buildReqPrompt(resume, jobDesc) {
     return prompt;
 };
 
+/**
+ * Handle a POST request.
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ *
+ * @returns {Void}
+ */
 const post = async (req, res) => {
     const prompt = buildReqPrompt(req.body.resume, req.body.jobDesc);
     if(prompt) {
@@ -54,6 +70,14 @@ const errorResponse = {
     data: "Sorry, but we we're unable to generate a cover letter for you. Please try again."
 };
 
+/**
+ * Handle incoming requests.
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ *
+ * @returns {Void}
+ */
 export default (req, res) => {
     req.method === "POST"
     ? post(req, res)

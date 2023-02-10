@@ -1,66 +1,84 @@
-import submitStyle from './submit.module.css'
+import submitStyle from './submit.module.css';
 import { useState } from 'react';
-import { Progress, Box, FormControl, Button, Tabs, TabList, Tab, TabPanels, TabPanel, Heading} from '@chakra-ui/react';
+import { Progress, Box, FormControl, Button, Tabs, TabList, Tab, TabPanels, TabPanel, Heading } from '@chakra-ui/react';
 import { AutoResizeTextarea } from './AutoResizeTextArea';
 
+/**
+ * Submit component for generating cover letters
+ */
 function Submit() {
+  // State hook to store the selected tab index
   const [tabIndex, setTabIndex] = useState(0);
+  // State hook to store the generated cover letter
   const [coverLetter, setCoverLetter] = useState();
+  // State hook to store the state of the form
   const [generating, setGenerating] = useState(false);
   
-  // Handles the submit event on form submit.
+  /**
+   * Handles the submit event on form submit
+   * @param {Event} event - The submit event object
+   */
   const handleSubmit = async (event) => {
     console.log("Submitting...");
     setGenerating(true);
     setTabIndex(1);
     
-    // Stop the form from submitting and refreshing the page.
-    event.preventDefault()
+    // Prevent the form from submitting and refreshing the page
+    event.preventDefault();
     
+    // Get the resume data from local storage
     const resume = JSON.parse(localStorage.getItem("resume"));
-    const jobDesc = event.target.jobDesc.value;
+    // Get the job description from the form
+    const jobDesc = event.target.elements.jobDesc.value;
     
-    // Create data object to send to openapi
+    // Create data object to send to OpenAI
     const data = {
       resume: resume,
       jobDesc: jobDesc
-    }
+    };
     
-    // Send the data to the server in JSON format.
-    const JSONdata = JSON.stringify(data)
+    // Convert the data object to JSON format
+    const JSONdata = JSON.stringify(data);
     
-    // API endpoint where we send form data.
-    const endpoint = '/api/openapi'
+    // API endpoint for sending form data
+    let endpoint = '/api/openapi';
     
-    // Form the request for sending data to the server.
+    // Form the request options for sending data to the server
     const options = {
-      // The method is POST because we are sending data.
+      // The request method is POST because we are sending data
       method: 'POST',
-      // Tell the server we're sending JSON.
+      // Specify the request header as application/json
       headers: {
         'Content-Type': 'application/json',
       },
-      // Body of the request is the JSON data we created above.
+      // The request body is the JSON data we created above
       body: JSONdata,
-    }
+    };
     
+    // Send the request to the server
     const response = await fetch(endpoint, options);
     
+    // Get the response from the server
     const result = await response.json();
     console.log(result);
     
+    // Set the generated cover letter in the state
     setCoverLetter(result.openai);
     setGenerating(false);
-  }
+  };
   
+  /**
+   * Handle the change event of the tabs
+   * @param {Number} index - The index of the selected tab
+   */
   const handleTabsChange = (index) => {
-    setTabIndex(index)
-  }
+    setTabIndex(index);
+  };
   
   return (
-    // We pass the event to the handleSubmit() function on submit.
+    // Render the form
     <form onSubmit={handleSubmit}>
-    <Button width={["100%", "85%", "50%"]} boxShadow='xl' p='6' rounded='md' type='submit' isLoading={generating} loadingText='Generating' colorScheme='green' variant='solid'>
+      <Button width={["100%", "85%", "50%"]} boxShadow='xl' p='6' rounded='md' type='submit' isLoading={generating} loadingText='Generating' colorScheme='green' variant='solid'>
     Generate Cover Letter
     </Button>
     <br />
@@ -77,8 +95,8 @@ function Submit() {
     <AutoResizeTextarea variant="flushed" size="sm" id="jobDesc" name="jobDesc" placeholder="Paste the job description here..." />
     </TabPanel>
     <TabPanel>
-    <Progress style={{display: generating ? 'block' : 'none'}} size='xs' colorScheme="orange" isIndeterminate />
-    <AutoResizeTextarea style={{display: !generating ? 'block' : 'none'}} variant="flushed" size="sm" isReadOnly value={coverLetter} />
+    <Progress style={{display: generating ? 'block' : 'none'}} size='xs' data-testid="progressbar" colorScheme="orange" isIndeterminate />
+    <AutoResizeTextarea style={{display: !generating ? 'block' : 'none'}} data-testid="coverLetterTextArea" variant="flushed" size="sm" isReadOnly value={coverLetter} />
     </TabPanel>
     </TabPanels>
     </Tabs>
