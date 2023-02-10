@@ -43,14 +43,19 @@ function buildReqPrompt(resume, jobDesc) {
 const post = async (req, res) => {
     const prompt = buildReqPrompt(req.body.resume, req.body.jobDesc);
     if(prompt) {
-        const response = await openai.createCompletion({
-            model: "text-davinci-003",
-            prompt: prompt,
-            temperature: 0.7,
-            max_tokens: 1500,
-            frequency_penalty: 0,
-            presence_penalty: 0,
-        });    
+        let response;
+        try {
+            response = await openai.createCompletion({
+                model: "text-davinci-003",
+                prompt: prompt,
+                temperature: 0.7,
+                max_tokens: 1500,
+                frequency_penalty: 0,
+                presence_penalty: 0,
+            });
+        } catch(error) {
+            console.log(error.message);
+        }    
         if(response) {
             const successResponse = {
                 openai: response.data.choices[0].text

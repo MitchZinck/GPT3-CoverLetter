@@ -20,6 +20,13 @@ global.fetch = jest.fn().mockImplementation(() => {
     });
 });
 
+
+afterEach(() => {
+    jest.clearAllMocks();
+    Configuration.mockClear();
+    OpenAIApi.mockClear();
+  });
+
 describe('Submit component', () => {
   let openai;
   beforeEach(() => {

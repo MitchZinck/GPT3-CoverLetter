@@ -11,6 +11,10 @@ global.fetch = jest.fn().mockImplementation(() => {
   });
 });
 
+afterEach(() => {
+  jest.clearAllMocks();
+});
+
 /**
  * Test the Resumeupload component
  */
