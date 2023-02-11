@@ -17,11 +17,13 @@ function buildReqPrompt(resume, jobDesc) {
     let prompt = null;
     try {
         if(resume.resumeText && jobDesc) {
-            prompt = "Using less than 300 words, create a professional cover letter for me that is based on this job: '" + 
-            jobDesc + 
-            "' and also based on my resume: '" + 
-            resume.resumeText + 
-            "' - If you decide to list skills or experience, only use those that are also listed in the provided resume.";
+            prompt = "Using less than 300 words, please generate a cover letter for the following job opportunity using the information from this job description: '" +
+            jobDesc +
+            "' \nand also based on this resume: '" +
+            resume.resumeText +
+            "' \n The cover letter should reflect ONLY the qualifications and experiences listed in the provided resume and " +
+            "address the requirements listed in the job description. It is important to note that the letter should not include any " +
+            "qualifications or experiences that are NOT listed in the resume. Any mention of unmentioned qualifications or experiences will not be considered.";
         } else if(jobDesc) {
             prompt = "Using less than 300 words, create a professional cover letter for me based on this job: '" + 
             jobDesc + "'"; 
