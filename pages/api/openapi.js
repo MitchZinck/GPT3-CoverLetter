@@ -20,9 +20,10 @@ function buildReqPrompt(resume, jobDesc) {
             prompt = "Using this resume: '" +
             resume.resumeText + "'\n Please generate a cover letter of less than 350 words for the following job opportunity: '" +
             jobDesc + "'";
-            if(prompt.length > 2600) {
-                prompt = prompt.substring(0, 2600);
+            if(prompt.length > 15000) {
+                prompt = prompt.substring(0, 15000);
             }
+            console.log(prompt);
         } else if(jobDesc) {
             prompt = "Using less than 350 words, create a professional cover letter for me based on this job: '" + 
             jobDesc + "'"; 
