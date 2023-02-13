@@ -20,6 +20,9 @@ function buildReqPrompt(resume, jobDesc) {
             prompt = "Using this resume: '" +
             resume.resumeText + "'\n Please generate a cover letter of less than 350 words for the following job opportunity: '" +
             jobDesc + "'";
+            if(prompt.length > 2600) {
+                prompt = prompt.substring(0, 2600);
+            }
         } else if(jobDesc) {
             prompt = "Using less than 350 words, create a professional cover letter for me based on this job: '" + 
             jobDesc + "'"; 
@@ -47,7 +50,7 @@ const post = async (req, res) => {
                 model: "text-davinci-003",
                 prompt: prompt,
                 temperature: 0.7,
-                max_tokens: 1500,
+                max_tokens: 600,
                 frequency_penalty: 0,
                 presence_penalty: 0,
             });
