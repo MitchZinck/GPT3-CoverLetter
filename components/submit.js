@@ -83,7 +83,7 @@ function Submit({uploadingResume}) {
     // Render the form
     <form onSubmit={handleSubmit}>
     <Button width={["100%", "85%", "50%"]} boxShadow='xl' p='6' rounded='md' type='submit' isLoading={generating} 
-    loadingText={uploadingResume ? 'Please wait...' : 'Generating'} colorScheme='green' variant='solid'>
+    loadingText={uploadingResume ? 'Parsing resume...' : 'Generating'} colorScheme='green' variant='solid'>
     {uploadingResume ? 'Please wait...' : 'Generate Cover Letter'}
     </Button>
     <br />
