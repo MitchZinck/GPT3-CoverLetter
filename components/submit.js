@@ -1,12 +1,12 @@
 import submitStyle from './submit.module.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Progress, Box, FormControl, Button, Tabs, TabList, Tab, TabPanels, TabPanel, Heading } from '@chakra-ui/react';
 import { AutoResizeTextarea } from './AutoResizeTextArea';
 
 /**
- * Submit component for generating cover letters
- */
-function Submit() {
+* Submit component for generating cover letters
+*/
+function Submit({uploadingResume}) {
   // State hook to store the selected tab index
   const [tabIndex, setTabIndex] = useState(0);
   // State hook to store the generated cover letter
@@ -14,10 +14,14 @@ function Submit() {
   // State hook to store the state of the form
   const [generating, setGenerating] = useState(false);
   
+  useEffect(() => {
+    setGenerating(uploadingResume);
+  }, [uploadingResume]);
+  
   /**
-   * Handles the submit event on form submit
-   * @param {Event} event - The submit event object
-   */
+  * Handles the submit event on form submit
+  * @param {Event} event - The submit event object
+  */
   const handleSubmit = async (event) => {
     console.log("Submitting...");
     setGenerating(true);
@@ -68,9 +72,9 @@ function Submit() {
   };
   
   /**
-   * Handle the change event of the tabs
-   * @param {Number} index - The index of the selected tab
-   */
+  * Handle the change event of the tabs
+  * @param {Number} index - The index of the selected tab
+  */
   const handleTabsChange = (index) => {
     setTabIndex(index);
   };
@@ -78,8 +82,9 @@ function Submit() {
   return (
     // Render the form
     <form onSubmit={handleSubmit}>
-      <Button width={["100%", "85%", "50%"]} boxShadow='xl' p='6' rounded='md' type='submit' isLoading={generating} loadingText='Generating' colorScheme='green' variant='solid'>
-    Generate Cover Letter
+    <Button width={["100%", "85%", "50%"]} boxShadow='xl' p='6' rounded='md' type='submit' isLoading={generating} 
+    loadingText={uploadingResume ? 'Please wait...' : 'Generating'} colorScheme='green' variant='solid'>
+    {uploadingResume ? 'Please wait...' : 'Generate Cover Letter'}
     </Button>
     <br />
     <br />

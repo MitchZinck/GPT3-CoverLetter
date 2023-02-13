@@ -16,7 +16,7 @@ const openai = new OpenAIApi(configuration);
 function buildReqPrompt(resume, jobDesc) {
     let prompt = null;
     try {
-        if(resume.resumeText && jobDesc) {
+        if(resume && jobDesc) {
             prompt = "Using this resume: '" +
             resume.resumeText + "'\n Please generate a cover letter of less than 350 words for the following job opportunity: '" +
             jobDesc + "'";

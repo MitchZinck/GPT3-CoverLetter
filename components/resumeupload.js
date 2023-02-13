@@ -6,7 +6,7 @@ import { FileUploader } from 'react-drag-drop-files';
  * If a file has already been uploaded, the component will display the file name along with the option to re-upload.
  * The uploaded file is stored in the local storage.
  */
-function Resumeupload() {
+function Resumeupload({setUploadingResume}) {
   // state to store the uploaded file
   const [file, setFile] = useState(null);
   // state to store the upload label
@@ -42,6 +42,7 @@ function Resumeupload() {
    * Async function to upload the file to the server using fetch API
    */
   const uploadToServer = async () => {
+    setUploadingResume(true);
     const body = new FormData();
     body.append("file", file);
     try {
@@ -58,6 +59,7 @@ function Resumeupload() {
     } catch (error) {
       console.error('Unable to successfully post to resume api:', error);
     }
+    setUploadingResume(false);
   };
 
   return (

@@ -11,7 +11,7 @@ import { Box, Heading, Center, Text, ListItem, OrderedList, Divider } from '@cha
  * 
  * @returns {JSX.Element} A React component that renders the form for generating cover letters
  */
-function HomePage() {
+function HomePage({uploadingResume, setUploadingResume}) {
   return (
     <>
       <Box p={4} width={['95%', '85%', '70%']} margin='auto'>
@@ -26,9 +26,12 @@ function HomePage() {
           <ListItem>Click 'Generate Cover Letter'</ListItem>
         </OrderedList>
         <br />
-        <ResumeUpload />
+        <ResumeUpload 
+        setUploadingResume={setUploadingResume}/>
         <br />
-        <Submit />
+        <Submit 
+        uploadingResume={uploadingResume}
+        />
       </Box>
     </>
   )
