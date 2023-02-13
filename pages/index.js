@@ -24,6 +24,7 @@ function HomePage({uploadingResume, setUploadingResume}) {
           <ListItem>(Optional) Upload your resume</ListItem>
           <ListItem>Paste a job description below</ListItem>
           <ListItem>Click 'Generate Cover Letter'</ListItem>
+          <ListItem>Generation can take up to 5 minutes</ListItem>
         </OrderedList>
         <br />
         <ResumeUpload 
