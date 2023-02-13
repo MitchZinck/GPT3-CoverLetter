@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
-import Resumeupload from '../components/resumeupload.js';
+import ResumeUpload from '../components/resumeupload.js';
 
 // Mock the global `fetch` function
 global.fetch = jest.fn().mockImplementation(() => {
@@ -15,6 +15,10 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
+function setUploadingResume() {
+
+}
+
 /**
  * Test the Resumeupload component
  */
@@ -23,7 +27,8 @@ describe('Resumeupload component', () => {
    * Test the label for file upload
    */
   it('renders the correct label for file upload', () => {
-    const { getByText } = render(<Resumeupload />);
+    const { getByText } = render(<ResumeUpload 
+      setUploadingResume={setUploadingResume}/>);
     const label = getByText(/Upload/);
     expect(label).toBeInTheDocument();
   });
@@ -32,7 +37,8 @@ describe('Resumeupload component', () => {
    * Test the label update after a file is uploaded
    */
   it('updates the label after a file is uploaded', () => {
-    const { container, getByText} = render(<Resumeupload />);
+    const { container, getByText} = render(<ResumeUpload 
+      setUploadingResume={setUploadingResume}/>);
     const file = new File(["resume content"], "resume.txt", {
       type: "text/plain",
     });
@@ -46,7 +52,8 @@ describe('Resumeupload component', () => {
    * Test saving the uploaded file to local storage
    */
   it('saves the uploaded file to local storage', () => {
-    const { container, getByText } = render(<Resumeupload />);
+    const { container, getByText } = render(<ResumeUpload 
+      setUploadingResume={setUploadingResume}/>);
     const file = new File(["resume content"], "resume.txt", {
       type: "text/plain",
     });
