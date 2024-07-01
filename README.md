@@ -1,5 +1,5 @@
 ##### Cover Letter Generator
-This app uses OpenAI's GPT-3 to generate professional cover letters based on a provided resume and job description. The application is built using Next.JS, a React-based framework for building server-side rendered and statically exported web applications. Check it out @ https://gpt-3-cover-letter.vercel.app/
+This app uses OpenAI's GPT-3 to generate professional cover letters based on a provided resume and job description. The application is built using Next.JS, a React-based framework for building server-side rendered and statically exported web applications.
 
 #### Features
 * Generates a custom cover letter based on your resume and job description.
